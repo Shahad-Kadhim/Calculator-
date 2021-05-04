@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    app:layoutDescription="@xml/activity_main_scene">
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -277,4 +278,127 @@ app:layout_constraintStart_toStartOf="@+id/pi"
         android:textColor="@color/white"
         android:layout_marginTop="16dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sin"
+    android:visibility="gone"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="sin"
+        app:layout_constraintBottom_toTopOf="@id/sin_h"
+        app:layout_constraintEnd_toEndOf="@id/log"
+        app:layout_constraintStart_toStartOf="@id/log"
+        app:layout_constraintTop_toBottomOf="@id/log" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sin_h"
+        style="@style/Button.digit"
+        android:visibility="gone"
+        android:text="sinh"
+        app:layout_constraintBottom_toTopOf="@id/digit_delete"
+        app:layout_constraintEnd_toEndOf="@id/sin"
+        app:layout_constraintStart_toStartOf="@id/sin"
+        app:layout_constraintTop_toBottomOf="@id/sin" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cos"
+        android:visibility="gone"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="cos"
+        app:layout_constraintBottom_toTopOf="@id/cos_h"
+        app:layout_constraintEnd_toEndOf="@id/ln"
+        app:layout_constraintStart_toStartOf="@id/ln"
+        app:layout_constraintTop_toBottomOf="@id/ln" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tan"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="tan"
+        app:layout_constraintBottom_toTopOf="@id/tan_h"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/squar_root"
+        app:layout_constraintStart_toStartOf="@id/squar_root"
+        app:layout_constraintTop_toBottomOf="@id/squar_root" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/log"
+        style="@style/Button.digit"
+        android:visibility="gone"
+        android:onClick="addNumber"
+        android:text="log"
+        app:layout_constraintBottom_toTopOf="@id/sin"
+        app:layout_constraintEnd_toEndOf="@id/clear"
+        app:layout_constraintStart_toStartOf="@id/clear"
+        app:layout_constraintTop_toBottomOf="@id/clear" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ln"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="ln"
+        app:layout_constraintBottom_toTopOf="@id/cos"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/mul_minus"
+        app:layout_constraintStart_toStartOf="@id/mul_minus"
+        app:layout_constraintTop_toBottomOf="@id/mul_minus" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/squar_root"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="^1/2"
+        app:layout_constraintBottom_toTopOf="@id/tan"
+        app:layout_constraintEnd_toEndOf="@id/percent"
+        app:layout_constraintStart_toStartOf="@id/percent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/percent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cos_h"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="cosh"
+        app:layout_constraintBottom_toTopOf="@id/cube_root"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/cos"
+        app:layout_constraintStart_toStartOf="@id/cos"
+        app:layout_constraintTop_toBottomOf="@id/cos" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tan_h"
+        style="@style/Button.digit"
+        android:onClick="addNumber"
+        android:text="tanh"
+        app:layout_constraintBottom_toTopOf="@id/cube"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/tan"
+        app:layout_constraintStart_toStartOf="@id/tan"
+        app:layout_constraintTop_toBottomOf="@id/tan" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cube_root"
+        style="@style/Button.digit"
+        android:layout_marginBottom="50dp"
+        android:onClick="addNumber"
+        android:text="^1/3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/cos_h"
+        app:layout_constraintStart_toStartOf="@id/cos_h"
+        app:layout_constraintTop_toBottomOf="@id/cos_h" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cube"
+        style="@style/Button.digit"
+        android:layout_marginBottom="50dp"
+        android:onClick="addNumber"
+        android:text="^3"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tan_h"
+        app:layout_constraintStart_toStartOf="@id/tan_h"
+        app:layout_constraintTop_toBottomOf="@id/tan_h" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

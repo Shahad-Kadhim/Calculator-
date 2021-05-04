@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+       <Constraint
+            android:id="@+id/science"
+            style="@style/Button"
+            android:onClick="science"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toTopOf="@id/percent"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/div"
+            app:layout_constraintStart_toEndOf="@id/pi"/>
+        <Constraint
+            android:id="@+id/digit_seven"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/digit_four"
+            app:layout_constraintEnd_toEndOf="@id/clear"
+            app:layout_constraintStart_toStartOf="@id/clear"
+            app:layout_constraintTop_toBottomOf="@id/clear" />
+        <Constraint
+            android:id="@+id/digit_eight"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_five"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/mul_minus"
+            app:layout_constraintStart_toStartOf="@id/mul_minus"
+            app:layout_constraintTop_toBottomOf="@id/mul_minus"/>
+
+        <Constraint
+            android:id="@+id/digit_nine"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/digit_six"
+            app:layout_constraintEnd_toEndOf="@id/percent"
+            app:layout_constraintStart_toStartOf="@id/percent"
+            app:layout_constraintTop_toBottomOf="@id/percent"/>
+        <Constraint
+            android:id="@+id/digit_one"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/digit_delete"
+            app:layout_constraintEnd_toEndOf="@id/digit_four"
+            app:layout_constraintStart_toStartOf="@id/digit_four"
+            app:layout_constraintTop_toBottomOf="@id/digit_four" />
+
+        <Constraint
+            android:id="@+id/digit_two"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_zero"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/digit_five"
+            app:layout_constraintStart_toStartOf="@id/digit_five"
+            app:layout_constraintTop_toBottomOf="@id/digit_five" />
+
+        <Constraint
+            android:id="@+id/digit_three"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/digit_dot"
+            app:layout_constraintEnd_toEndOf="@id/digit_six"
+            app:layout_constraintStart_toStartOf="@id/digit_six"
+            app:layout_constraintTop_toBottomOf="@id/digit_six"/>
+
+        <Constraint
+            android:id="@+id/digit_delete"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/digit_one"
+            app:layout_constraintStart_toStartOf="@id/digit_one"
+            app:layout_constraintEnd_toEndOf="@id/digit_one"/>
+
+        <Constraint
+            android:id="@+id/digit_zero"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/digit_two"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@id/digit_two"
+            app:layout_constraintTop_toBottomOf="@id/digit_two"/>
+
+        <Constraint
+            android:id="@+id/digit_four"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/digit_one"
+            app:layout_constraintEnd_toEndOf="@id/digit_seven"
+            app:layout_constraintStart_toStartOf="@id/digit_seven"
+            app:layout_constraintTop_toBottomOf="@id/digit_seven" />
+        <Constraint
+            android:id="@+id/digit_five"
+            android:visibility="visible"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_two"
+            app:layout_constraintEnd_toEndOf="@id/digit_eight"
+            app:layout_constraintStart_toStartOf="@id/digit_eight"
+            app:layout_constraintTop_toBottomOf="@id/digit_eight" />
+
+        <Constraint
+            android:id="@+id/digit_six"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/digit_three"
+            app:layout_constraintEnd_toEndOf="@id/digit_nine"
+            app:layout_constraintStart_toStartOf="@id/digit_nine"
+            app:layout_constraintTop_toBottomOf="@id/digit_nine"/>
+        <Constraint
+            android:id="@+id/digit_dot"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/digit_three"
+            app:layout_constraintStart_toStartOf="@id/digit_three"
+            app:layout_constraintTop_toBottomOf="@id/digit_three"/>
+        <Constraint
+            android:id="@+id/sin"
+            android:visibility="gone"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/sin_h"
+            app:layout_constraintEnd_toEndOf="@id/log"
+            app:layout_constraintStart_toStartOf="@id/log"
+            app:layout_constraintTop_toBottomOf="@id/log" />
+
+        <Constraint
+            android:id="@+id/sin_h"
+            style="@style/Button.digit"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/digit_delete"
+            app:layout_constraintEnd_toEndOf="@id/sin"
+            app:layout_constraintStart_toStartOf="@id/sin"
+            app:layout_constraintTop_toBottomOf="@id/sin" />
+
+        <Constraint
+            android:id="@+id/cos"
+            android:visibility="gone"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cos_h"
+            app:layout_constraintEnd_toEndOf="@id/ln"
+            app:layout_constraintStart_toStartOf="@id/ln"
+            app:layout_constraintTop_toBottomOf="@id/ln" />
+
+        <Constraint
+            android:id="@+id/tan"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/tan_h"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/squar_root"
+            app:layout_constraintStart_toStartOf="@id/squar_root"
+            app:layout_constraintTop_toBottomOf="@id/squar_root"/>
+        <Constraint
+            android:id="@+id/log"
+            style="@style/Button.digit"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/sin"
+            app:layout_constraintEnd_toEndOf="@id/clear"
+            app:layout_constraintStart_toStartOf="@id/clear"
+            app:layout_constraintTop_toBottomOf="@id/clear" />
+
+
+        <Constraint
+            android:id="@+id/ln"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cos"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/mul_minus"
+            app:layout_constraintStart_toStartOf="@id/mul_minus"
+            app:layout_constraintTop_toBottomOf="@id/mul_minus"/>
+
+        <Constraint
+            android:id="@+id/squar_root"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/tan"
+            app:layout_constraintEnd_toEndOf="@id/percent"
+            app:layout_constraintStart_toStartOf="@id/percent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/percent"/>
+
+        <Constraint
+            android:id="@+id/cos_h"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cube_root"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/cos"
+            app:layout_constraintStart_toStartOf="@id/cos"
+            app:layout_constraintTop_toBottomOf="@id/cos" />
+
+        <Constraint
+            android:id="@+id/tan_h"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cube"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/tan"
+            app:layout_constraintStart_toStartOf="@id/tan"
+            app:layout_constraintTop_toBottomOf="@id/tan" />
+
+        <Constraint
+            android:id="@+id/cube_root"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/cos_h"
+            app:layout_constraintStart_toStartOf="@id/cos_h"
+            app:layout_constraintTop_toBottomOf="@id/cos_h" />
+
+        <Constraint
+            android:id="@+id/cube"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tan_h"
+            app:layout_constraintStart_toStartOf="@id/tan_h"
+            app:layout_constraintTop_toBottomOf="@id/tan_h" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/science"
+            style="@style/Button"
+            android:onClick="science"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toTopOf="@id/percent"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/div"
+            app:layout_constraintStart_toEndOf="@id/pi"/>
+
+        <Constraint
+            android:id="@+id/digit_seven"
+            style="@style/Button.digit"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/digit_four"
+            app:layout_constraintEnd_toEndOf="@id/clear"
+            app:layout_constraintStart_toStartOf="@id/clear"
+            app:layout_constraintTop_toBottomOf="@id/clear" />
+
+        <Constraint
+            android:id="@+id/digit_eight"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_five"
+            app:layout_constraintEnd_toEndOf="@id/mul_minus"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/mul_minus"
+            app:layout_constraintTop_toBottomOf="@id/mul_minus" />
+
+        <Constraint
+            android:id="@+id/digit_nine"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_six"
+            app:layout_constraintEnd_toEndOf="@id/percent"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/percent"
+            app:layout_constraintTop_toBottomOf="@id/percent" />
+        <Constraint
+            android:id="@+id/digit_one"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_delete"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/digit_four"
+            app:layout_constraintStart_toStartOf="@id/digit_four"
+            app:layout_constraintTop_toBottomOf="@id/digit_four" />
+
+        <Constraint
+            android:id="@+id/digit_four"
+            style="@style/Button.digit"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/digit_one"
+            app:layout_constraintEnd_toEndOf="@id/digit_seven"
+            app:layout_constraintStart_toStartOf="@id/digit_seven"
+            app:layout_constraintTop_toBottomOf="@id/digit_seven" />
+
+        <Constraint
+            android:id="@+id/digit_five"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_two"
+            app:layout_constraintEnd_toEndOf="@id/digit_eight"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/digit_eight"
+            app:layout_constraintTop_toBottomOf="@id/digit_eight" />
+
+        <Constraint
+            android:id="@+id/digit_six"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_three"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/digit_nine"
+            app:layout_constraintStart_toStartOf="@id/digit_nine"
+            app:layout_constraintTop_toBottomOf="@id/digit_nine" />
+        <Constraint
+            android:id="@+id/digit_two"
+            style="@style/Button.digit"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/digit_zero"
+            app:layout_constraintEnd_toEndOf="@id/digit_five"
+            app:layout_constraintStart_toStartOf="@id/digit_five"
+            app:layout_constraintTop_toBottomOf="@id/digit_five" />
+
+        <Constraint
+            android:id="@+id/digit_three"
+            style="@style/Button.digit"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/digit_dot"
+            app:layout_constraintEnd_toEndOf="@id/digit_six"
+            app:layout_constraintStart_toStartOf="@id/digit_six"
+            app:layout_constraintTop_toBottomOf="@id/digit_six" />
+        <Constraint
+            android:id="@+id/digit_delete"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sin_h"
+            app:layout_constraintStart_toStartOf="@id/sin_h"
+            app:layout_constraintEnd_toEndOf="@id/sin_h" />
+
+        <Constraint
+            android:id="@+id/digit_zero"
+            android:visibility="invisible"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/digit_two"
+            app:layout_constraintStart_toStartOf="@id/digit_two"
+            app:layout_constraintTop_toBottomOf="@id/digit_two" />
+
+        <Constraint
+            android:id="@+id/digit_dot"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/digit_three"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@id/digit_three"
+            app:layout_constraintTop_toBottomOf="@id/digit_three"/>
+
+
+        <Constraint
+            android:id="@+id/sin"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/sin_h"
+            app:layout_constraintEnd_toEndOf="@id/log"
+            app:layout_constraintStart_toStartOf="@id/log"
+            app:layout_constraintTop_toBottomOf="@id/log"/>
+
+        <Constraint
+            android:id="@+id/sin_h"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/digit_delete"
+            app:layout_constraintEnd_toEndOf="@id/sin"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@id/sin"
+            app:layout_constraintTop_toBottomOf="@id/sin" />
+        <Constraint
+            android:id="@+id/cos"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cos_h"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/ln"
+            app:layout_constraintStart_toStartOf="@id/ln"
+            app:layout_constraintTop_toBottomOf="@id/ln"/>
+
+        <Constraint
+            android:id="@+id/tan"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/tan_h"
+            app:layout_constraintEnd_toEndOf="@id/squar_root"
+            app:layout_constraintStart_toStartOf="@id/squar_root"
+            app:layout_constraintTop_toBottomOf="@id/squar_root" />
+        <Constraint
+            android:id="@+id/log"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/sin"
+            app:layout_constraintEnd_toEndOf="@id/clear"
+            app:layout_constraintStart_toStartOf="@id/clear"
+            app:layout_constraintTop_toBottomOf="@id/clear"/>
+
+        <Constraint
+            android:id="@+id/ln"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cos"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/mul_minus"
+            app:layout_constraintStart_toStartOf="@id/mul_minus"
+            app:layout_constraintTop_toBottomOf="@id/mul_minus" />
+        <Constraint
+            android:id="@+id/squar_root"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/tan"
+            app:layout_constraintEnd_toEndOf="@id/percent"
+            app:layout_constraintStart_toStartOf="@id/percent"
+            app:layout_constraintTop_toBottomOf="@id/percent"/>
+        <Constraint
+            android:id="@+id/cos_h"
+            android:visibility="visible"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cube_root"
+            app:layout_constraintEnd_toEndOf="@id/cos"
+            app:layout_constraintStart_toStartOf="@id/cos"
+            app:layout_constraintTop_toBottomOf="@id/cos"/>
+
+        <Constraint
+            android:id="@+id/tan_h"
+            android:visibility="visible"
+            style="@style/Button.digit"
+            app:layout_constraintBottom_toTopOf="@id/cube"
+            app:layout_constraintEnd_toEndOf="@id/tan"
+            app:layout_constraintStart_toStartOf="@id/tan"
+            app:layout_constraintTop_toBottomOf="@id/tan" />
+
+        <Constraint
+            android:id="@+id/cube_root"
+            android:visibility="visible"
+            style="@style/Button.digit"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/cos_h"
+            app:layout_constraintStart_toStartOf="@id/cos_h"
+            app:layout_constraintTop_toBottomOf="@id/cos_h" />
+
+        <Constraint
+            android:id="@+id/cube"
+            style="@style/Button.digit"
+            android:visibility="visible"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tan_h"
+            app:layout_constraintStart_toStartOf="@id/tan_h"
+            app:layout_constraintTop_toBottomOf="@id/tan_h"/>
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start" >
+        <OnClick app:targetId="@+id/science"
+            app:clickAction="toggle"/>
+    </Transition>
+</MotionScene>
