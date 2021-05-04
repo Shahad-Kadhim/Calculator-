@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import com.example.week9.databinding.ActivityMainBinding
+import kotlin.math.*
 
 class MainActivity : AppCompatActivity() {
      var operation :Operation?=null
@@ -28,7 +29,61 @@ class MainActivity : AppCompatActivity() {
         val oldValue=binding.equation.text.toString()
         binding.equation.text=oldValue + (v as Button).text.toString()
     }
+    private fun calcMath(v :View){
+        takeIf { operation !=null }?.let { binding.result.text=makeOperation() }
+        binding.equation.text=""
+        addNumber(v)
+    }
+    private fun calcMath2(v :View){
+        takeIf { operation !=null }?.let { binding.equation.text=makeOperation() }
+        saveOldValue((v as Button).text.toString())
+    }
+    private fun myPow(pow:Double){
+
+        if (operation == null) {
+            tempResult = Math.pow(binding.equation.text.toString().toDouble(), pow).toString()
+            binding.result.text = tempResult
+            binding.equation.text=tempResult
+        }
+        else if(binding.result.text.isNotEmpty())  {
+            tempResult = Math.pow(binding.result.text.toString().toDouble(), pow).toString()
+            binding.result.text=tempResult
+        }
+        else invalidMessage()
+    }
     private fun callback() {
+        binding.log.setOnClickListener {
+            calcMath(it)
+            operation=Operation.Log
+        }
+        binding.ln.setOnClickListener {
+            calcMath(it)
+            operation=Operation.Ln
+        }
+        binding.sin.setOnClickListener {
+            calcMath(it)
+            operation=Operation.Sin
+        }
+        binding.cos.setOnClickListener {
+            calcMath(it)
+            operation=Operation.Cos
+        }
+        binding.tan.setOnClickListener {
+            calcMath(it)
+            operation=Operation.Tan
+        }
+        binding.tanH.setOnClickListener {
+            calcMath(it)
+            operation=Operation.TanH
+        }
+        binding.sinH.setOnClickListener {
+            calcMath(it)
+            operation=Operation.SinH
+        }
+        binding.cosH.setOnClickListener {
+            calcMath(it)
+            operation=Operation.CosH
+        }
         binding.digitDelete.setOnClickListener {
             binding.equation.text.toString().takeIf { it.isNotEmpty() }?.let {
                 if(!it.last().isDigit()) operation=null
@@ -67,51 +122,31 @@ class MainActivity : AppCompatActivity() {
                 binding.result.text=tempResult
             }else invalidMessage()
         }
-        binding.square.setOnClickListener {
-            if (operation == null) {
-                tempResult = Math.pow(binding.equation.text.toString().toDouble(), 2.0).toString()
-                binding.result.text = tempResult
-                binding.equation.text=tempResult
-            }
-            else if(binding.result.text.isNotEmpty())  {
-                tempResult = Math.pow(binding.result.text.toString().toDouble(), 2.0).toString()
-                binding.result.text=tempResult
-            }
-            else invalidMessage()
-        }
+        binding.square.setOnClickListener { myPow(2.0) }
+        binding.cube.setOnClickListener { myPow(3.0) }
+        binding.cubeRoot.setOnClickListener { myPow(1.0/3) }
+        binding.squarRoot.setOnClickListener { myPow(0.5) }
         binding.plus.setOnClickListener {
-            takeIf { operation !=null }?.let {
-                binding.equation.text=makeOperation()
-            }
+            calcMath2(it)
             operation=Operation.Plus
-            saveOldValue((it as Button).text.toString())
-
         }
         binding.mul.setOnClickListener {
-            takeIf { operation !=null }?.let {
-                binding.equation.text=makeOperation()
-            }
+            calcMath2(it)
             operation=Operation.Mul
-            saveOldValue((it as Button).text.toString())
         }
         binding.sub.setOnClickListener {
-            takeIf { operation !=null }?.let {
-                binding.equation.text=makeOperation()
-            }
+            calcMath2(it)
             operation=Operation.Minus
-            saveOldValue((it as Button).text.toString())
         }
         binding.div.setOnClickListener {
-            takeIf { operation !=null }?.let {
-                binding.equation.text=makeOperation()
-            }
+           calcMath2(it)
             operation=Operation.Div
-            saveOldValue((it as Button).text.toString())
         }
         binding.equal.setOnClickListener {
             binding.result.text=makeOperation()
         }
     }
+
     private fun  makeOperation() =
             when(operation) {
                 Operation.Plus -> (oldValue + extractSecondValue('+')).toString()
@@ -119,7 +154,16 @@ class MainActivity : AppCompatActivity() {
                 Operation.Mul -> (oldValue * extractSecondValue('*')).toString()
                 Operation.Div -> (oldValue / extractSecondValue('/')).toString()
                 null -> binding.equation.text.toString()
+                Operation.Sin ->  sin(Math.toRadians(extractNumber())).toString()
+                Operation.Cos ->  cos(Math.toRadians(extractNumber())).toString()
+                Operation.Tan ->  tan(Math.toRadians(extractNumber())).toString()
+                Operation.SinH ->  sinh(Math.toRadians(extractNumber())).toString()
+                Operation.CosH ->  cosh(Math.toRadians(extractNumber())).toString()
+                Operation.TanH ->  tanh(Math.toRadians(extractNumber())).toString()
+                Operation.Log -> log10(extractNumber()).toString()
+                Operation.Ln -> ln1p(extractNumber()).toString()
             }
+    private fun extractNumber()=binding.equation.text.toString().replace("[a-z]".toRegex(),"").toDouble()
     private fun extractSecondValue(op :Char):Double{
         val equation=binding.equation.text.toString()
         val secondNumber=equation.substring(equation.indexOf(op)+1).trimStart()
