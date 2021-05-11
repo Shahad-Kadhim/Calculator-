@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.7"
         app:layout_constraintVertical_chainStyle="packed"
         android:textColor="#1a1a1a"
-        android:maxLength="10"
+        android:maxLength="20"
         android:textSize="20sp" />
     <TextView
         android:id="@+id/result"

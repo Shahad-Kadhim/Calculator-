@@ -11,8 +11,10 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import com.example.week9.databinding.ActivityMainBinding
 import kotlin.math.*
+import kotlin.Exception as Exception1
 
 class MainActivity : AppCompatActivity() {
      var operation :Operation?=null
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
      var oldValue : Double = 0.0
     var binary=false
     lateinit var binding: ActivityMainBinding
+    lateinit var opChar: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -29,18 +32,22 @@ class MainActivity : AppCompatActivity() {
     fun addNumber(v : View){
         val oldValue2=binding.equation.text.toString()
         binding.equation.text=oldValue2 + (v as Button).text.toString()
+        binding.result.text=if(binary&&operation!=null) Integer.toBinaryString(makeOperation().apply { Log.i("MM",this) }.toDouble().toInt()).toString() else makeOperation()
     }
     private fun calcMath(v :View){
-        takeIf { operation !=null }?.let { binding.result.text=makeOperation() }
+        //takeIf { operation !=null }?.let { binding.result.text=makeOperation() }
         binding.equation.text=""
         addNumber(v)
     }
     private fun calcMath2(v :View){
-        takeIf { operation !=null }?.let { binding.equation.text=makeOperation() }
-        saveOldValue((v as Button).text.toString())
+        if (operation==null ){ saveOldValue((v as Button).text.toString()) }
+        else{
+            val lastResult=binding.result.text.toString()
+            oldValue=if(binary) Integer.parseInt(lastResult,2).toDouble() else lastResult.toDouble()
+            binding.equation.text=binding.equation.text.toString()+(v as Button).text.toString()
+        }
     }
     private fun myPow(pow:Double){
-
         if (operation == null) {
             var s=if(binary) Integer.parseInt(binding.equation.text.toString(),2).toString() else binding.equation.text.toString()
             tempResult = Math.pow(s.toDouble(), pow).toString()
@@ -141,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             operation=Operation.Minus
         }
         binding.div.setOnClickListener {
-           calcMath2(it)
+            calcMath2(it)
             operation=Operation.Div
         }
         binding.equal.setOnClickListener {
@@ -173,12 +180,12 @@ class MainActivity : AppCompatActivity() {
     }
     private fun extractSecondValue(op :Char):Double{
         val equation=binding.equation.text.toString()
-        val secondNumber=equation.substring(equation.indexOf(op)+1).trimStart()
+        val secondNumber=equation.substring(equation.lastIndexOf(op)+1).trimStart()
         if(secondNumber[0]=='.') {
             invalidMessage()
             return 0.0
         }
-       return secondNumber.toDouble()
+       return secondNumber.apply { if(binary) return Integer.parseInt(this,2).toDouble() }.toDouble()
     }
     private fun invalidMessage() {
         Toast.makeText(this, "invalid operation", Toast.LENGTH_SHORT).show()
@@ -188,7 +195,7 @@ class MainActivity : AppCompatActivity() {
             var s=binding.equation.text.toString()
             binding.equation.text= "$s  $op  "
             oldValue= Integer.parseInt(s, 2).toDouble()
-        } else  oldValue=binding.equation.text.toString().apply{ binding.equation.text= "$this  $op  " }.toDouble()
+        } else  oldValue=binding.equation.text.toString().apply{ binding.equation.text= "$this$op" }.toDouble()
     }
     private fun clear(){
         binding.result.text=""
