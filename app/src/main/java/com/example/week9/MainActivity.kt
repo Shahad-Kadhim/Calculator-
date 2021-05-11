@@ -18,11 +18,11 @@ import kotlin.Exception as Exception1
 
 class MainActivity : AppCompatActivity() {
      var operation :Operation?=null
+     var scienceOperation :ScienceOperation?=null
     private lateinit var tempResult:String
      var oldValue : Double = 0.0
     var binary=false
     lateinit var binding: ActivityMainBinding
-    lateinit var opChar: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -32,14 +32,17 @@ class MainActivity : AppCompatActivity() {
     fun addNumber(v : View){
         val oldValue2=binding.equation.text.toString()
         binding.equation.text=oldValue2 + (v as Button).text.toString()
-        binding.result.text=if(binary&&operation!=null) Integer.toBinaryString(makeOperation().apply { Log.i("MM",this) }.toDouble().toInt()).toString() else makeOperation()
+        binding.result.text=if(binary&&operation!=null) Integer.toBinaryString(makeOperation().toDouble().toInt()).toString() else makeOperation()
     }
     private fun calcMath(v :View){
-        //takeIf { operation !=null }?.let { binding.result.text=makeOperation() }
-        binding.equation.text=""
-        addNumber(v)
+        val oldValue2=binding.equation.text.toString()
+        binding.equation.text=oldValue2 + (v as Button).text.toString()+"("
     }
     private fun calcMath2(v :View){
+        if(scienceOperation!=null) {
+            binding.equation.text=binding.equation.text.toString()+")"
+            scienceOperation=null
+        }
         if (operation==null ){ saveOldValue((v as Button).text.toString()) }
         else{
             val lastResult=binding.result.text.toString()
@@ -67,35 +70,35 @@ class MainActivity : AppCompatActivity() {
     private fun callback() {
         binding.log.setOnClickListener {
             calcMath(it)
-            operation=Operation.Log
+            scienceOperation=ScienceOperation.Log
         }
         binding.ln.setOnClickListener {
             calcMath(it)
-            operation=Operation.Ln
+            scienceOperation=ScienceOperation.Ln
         }
         binding.sin.setOnClickListener {
             calcMath(it)
-            operation=Operation.Sin
+            scienceOperation=ScienceOperation.Sin
         }
         binding.cos.setOnClickListener {
             calcMath(it)
-            operation=Operation.Cos
+            scienceOperation=ScienceOperation.Cos
         }
         binding.tan.setOnClickListener {
             calcMath(it)
-            operation=Operation.Tan
+            scienceOperation=ScienceOperation.Tan
         }
         binding.tanH.setOnClickListener {
             calcMath(it)
-            operation=Operation.TanH
+            scienceOperation=ScienceOperation.TanH
         }
         binding.sinH.setOnClickListener {
             calcMath(it)
-            operation=Operation.SinH
+            scienceOperation=ScienceOperation.SinH
         }
         binding.cosH.setOnClickListener {
             calcMath(it)
-            operation=Operation.CosH
+            scienceOperation= ScienceOperation.CosH
         }
         binding.digitDelete.setOnClickListener {
             binding.equation.text.toString().takeIf { it.isNotEmpty() }?.let {
@@ -157,30 +160,34 @@ class MainActivity : AppCompatActivity() {
             binding.result.text =temp
         }
     }
-
     private fun  makeOperation() =
             when(operation) {
                 Operation.Plus -> (oldValue + extractSecondValue('+')).toString()
                 Operation.Minus -> (oldValue - extractSecondValue('-')).toString()
                 Operation.Mul -> (oldValue * extractSecondValue('*')).toString()
                 Operation.Div -> (oldValue / extractSecondValue('/')).toString()
-                null -> binding.equation.text.toString()
-                Operation.Sin ->  sin(Math.toRadians(extractNumber())).toString()
-                Operation.Cos ->  cos(Math.toRadians(extractNumber())).toString()
-                Operation.Tan ->  tan(Math.toRadians(extractNumber())).toString()
-                Operation.SinH ->  sinh(Math.toRadians(extractNumber())).toString()
-                Operation.CosH ->  cosh(Math.toRadians(extractNumber())).toString()
-                Operation.TanH ->  tanh(Math.toRadians(extractNumber())).toString()
-                Operation.Log -> log10(extractNumber()).toString()
-                Operation.Ln -> ln1p(extractNumber()).toString()
+                null -> ""
             }
-    private fun extractNumber():Double{
-        return if(binary) Integer.parseInt(binding.equation.text.toString(), 2).toDouble()
-        else binding.equation.text.toString().replace("[a-z]".toRegex(),"").toDouble()
-    }
+    private fun trigonometric(number:Double)=
+            when(scienceOperation){
+                ScienceOperation.Sin -> sin(Math.toRadians(number))
+                ScienceOperation.Cos -> cos(Math.toRadians(number))
+                ScienceOperation.Tan -> tan(Math.toRadians(number))
+                ScienceOperation.SinH -> sinh(Math.toRadians(number))
+                ScienceOperation.CosH -> cosh(Math.toRadians(number))
+                ScienceOperation.TanH -> tanh(Math.toRadians(number))
+                ScienceOperation.Log -> log10(number)
+                ScienceOperation.Ln -> ln1p(number)
+                null -> 0.0
+        }
     private fun extractSecondValue(op :Char):Double{
+        val secondNumber :String
         val equation=binding.equation.text.toString()
-        val secondNumber=equation.substring(equation.lastIndexOf(op)+1).trimStart()
+        if(scienceOperation!=null) {
+            secondNumber=equation.substring(equation.lastIndexOf("(")+1).trimStart()
+            return trigonometric(secondNumber.toDouble())
+        }
+        secondNumber=equation.substring(equation.lastIndexOf(op)+1).trimStart()
         if(secondNumber[0]=='.') {
             invalidMessage()
             return 0.0
@@ -191,16 +198,17 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "invalid operation", Toast.LENGTH_SHORT).show()
     }
     private fun saveOldValue(op:String){
-        if(binary) {
-            var s=binding.equation.text.toString()
-            binding.equation.text= "$s  $op  "
-            oldValue= Integer.parseInt(s, 2).toDouble()
-        } else  oldValue=binding.equation.text.toString().apply{ binding.equation.text= "$this$op" }.toDouble()
+            if(binary) {
+                var s=binding.equation.text.toString()
+                binding.equation.text= "$s$op"
+                oldValue= Integer.parseInt(s, 2).toDouble()
+            } else  oldValue=binding.equation.text.toString().apply{ binding.equation.text= "$this$op" }.toDouble()
     }
     private fun clear(){
         binding.result.text=""
         binding.equation.text=""
         operation=null
+        scienceOperation=null
     }
     fun binary(v :View){
         clear()
