@@ -19,6 +19,7 @@ import kotlin.Exception as Exception1
 class MainActivity : AppCompatActivity() {
      var operation :Operation?=null
      var scienceOperation :ScienceOperation?=null
+     var power :Power?=null
     private lateinit var tempResult:String
      var oldValue : Double = 0.0
     var binary=false
@@ -43,27 +44,31 @@ class MainActivity : AppCompatActivity() {
             binding.equation.text=binding.equation.text.toString()+")"
             scienceOperation=null
         }
-        if (operation==null ){ saveOldValue((v as Button).text.toString()) }
+        if (operation==null&&power==null){ saveOldValue((v as Button).text.toString()) }
         else{
             val lastResult=binding.result.text.toString()
             oldValue=if(binary) Integer.parseInt(lastResult,2).toDouble() else lastResult.toDouble()
             binding.equation.text=binding.equation.text.toString()+(v as Button).text.toString()
         }
+        power=null
     }
     private fun myPow(pow:Double){
-        if (operation == null) {
+        val powString=when (pow){2.0->"²" 3.0->"³" 1.0/3->"⅓" 0.5->"½" else ->"" }
+        if (operation == null&&binding.equation.text.toString().isNotEmpty()) {
             var s=if(binary) Integer.parseInt(binding.equation.text.toString(),2).toString() else binding.equation.text.toString()
             tempResult = Math.pow(s.toDouble(), pow).toString()
-            Toast.makeText(this,tempResult.toDouble().toInt().toString(),Toast.LENGTH_LONG).show()
-            if(binary) tempResult=Integer.toBinaryString(tempResult.toDouble().toInt()).toString()
-            binding.result.text = tempResult
-            binding.equation.text=tempResult
+            binding.result.text=if(binary) Integer.toBinaryString(tempResult.toDouble().toInt()).toString() else tempResult
+            binding.equation.text="(${binding.equation.text})$powString"
         }
-        else if(binding.result.text.isNotEmpty())  {
-            var s=if(binary) Integer.parseInt(binding.result.text.toString(),2).toString() else binding.result.text.toString()
+        else if(operation!=null) {
+            val tempOp=power
+            power=null
+            val l=binding.equation.text.toString().replace("\\d".toRegex(),"").last()
+            var s= extractSecondValue(l).toString().apply { Log.i("MM",this) }
             tempResult = Math.pow(s.toDouble(), pow).toString()
-            if(binary) tempResult=Integer.toBinaryString(tempResult.toDouble().toInt()).toString()
-            binding.result.text=tempResult
+            power=tempOp
+            binding.result.text=if(binary) Integer.toBinaryString(makeOperation().toDouble().toInt()).toString() else makeOperation()
+            binding.equation.text=binding.equation.text.toString().substringBeforeLast(l)+l+"(${if(binary)Integer.toBinaryString(s.toDouble().toInt())else s})$powString"
         }
         else invalidMessage()
     }
@@ -125,19 +130,36 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.percent.setOnClickListener {
-            if (operation == null) {
+            if (operation == null&& binding.equation.text.isNotEmpty()) {
                 tempResult = (binding.equation.text.toString().toDouble() / 100.0).toString()
-                binding.result.text = "$tempResult %"
-            }
-            else if(binding.result.text.isNotEmpty())  {
-                tempResult = (binding.result.text.toString().toDouble() / 100.0).toString()
                 binding.result.text=tempResult
+                binding.equation.text="${binding.equation.text}%"
+                power=Power.Cube //any thing
+            }
+            else if(operation!=null)  {
+                val l=binding.equation.text.toString().replace("\\d".toRegex(),"").last()
+                var s= extractSecondValue(l).toString()
+                tempResult = (s.toDouble() / 100.0).toString().apply { Log.i("MM",this) }
+                Log.i("MM",oldValue.toString())
+                binding.result.text= makeOperation()
+                binding.equation.text=binding.equation.text.toString().substringBeforeLast(l)+l+"$s%"
+                power=Power.Cube //any thing
             }else invalidMessage()
         }
-        binding.square.setOnClickListener { myPow(2.0) }
-        binding.cube.setOnClickListener { myPow(3.0) }
-        binding.cubeRoot.setOnClickListener { myPow(1.0/3) }
-        binding.squarRoot.setOnClickListener { myPow(0.5) }
+        binding.square.setOnClickListener {
+            power=Power.Square
+            myPow(2.0)
+        }
+        binding.cube.setOnClickListener {
+            power=Power.Cube
+            myPow(3.0) }
+        binding.cubeRoot.setOnClickListener {
+            power=Power.CubeRoot
+            myPow(1.0/3)
+        }
+        binding.squarRoot.setOnClickListener {
+            power=Power.SquareRoot
+            myPow(0.5) }
         binding.plus.setOnClickListener {
             calcMath2(it)
             operation=Operation.Plus
@@ -155,14 +177,12 @@ class MainActivity : AppCompatActivity() {
             operation=Operation.Div
         }
         binding.equal.setOnClickListener {
-            var temp =makeOperation()
-            if(binary) temp =Integer.toBinaryString(temp.toDouble().toInt()).toString()
-            binding.result.text =temp
+            binding.equation.text=binding.result.text.toString().apply { clear() }
         }
     }
     private fun  makeOperation() =
             when(operation) {
-                Operation.Plus -> (oldValue + extractSecondValue('+')).toString()
+                Operation.Plus -> (oldValue + extractSecondValue('+').apply { Log.i("MM",this.toString()) }).toString()
                 Operation.Minus -> (oldValue - extractSecondValue('-')).toString()
                 Operation.Mul -> (oldValue * extractSecondValue('*')).toString()
                 Operation.Div -> (oldValue / extractSecondValue('/')).toString()
@@ -187,6 +207,10 @@ class MainActivity : AppCompatActivity() {
             secondNumber=equation.substring(equation.lastIndexOf("(")+1).trimStart()
             return trigonometric(secondNumber.toDouble())
         }
+//        Log.i("MM",oldValue.toString())
+        if(power!=null){
+             return tempResult.apply {Log.i("MfM",this)  }.toDouble()
+        }
         secondNumber=equation.substring(equation.lastIndexOf(op)+1).trimStart()
         if(secondNumber[0]=='.') {
             invalidMessage()
@@ -209,6 +233,7 @@ class MainActivity : AppCompatActivity() {
         binding.equation.text=""
         operation=null
         scienceOperation=null
+        power=null
     }
     fun binary(v :View){
         clear()
